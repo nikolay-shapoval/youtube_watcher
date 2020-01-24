@@ -1,8 +1,20 @@
-##Installation
+```
+cp .envexample .env
+```
 
-#####composer install
-#####php artisan migrate
-#####php artisan db:seed
+```
+composer install
+```
 
-#####npm install
-#####npm run development
+```
+php artisan migrate
+```
+```
+php artisan db:seed
+```
+```
+npm install
+```
+```
+npm run development
+```
