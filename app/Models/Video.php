@@ -11,7 +11,12 @@ class Video extends Model
     ];
 
     protected $fillable = [
-        'chanel_id', 'title', 'url', 'image_url', 'description', 'is_visible',
+        'chanel_id',
+        'title',
+        'url',
+        'image_url',
+        'description',
+        'is_visible',
     ];
 
     protected $appends = [
@@ -20,7 +25,7 @@ class Video extends Model
 
     public function getEmbedLinkAttribute()
     {
-        if (isset(explode('=', $this->url)[1])){
+        if (isset(explode('=', $this->url)[1])) {
             return 'https://www.youtube.com/embed/' . explode('=', $this->url)[1];
         } else {
             return 'https://www.youtube.com/embed/';

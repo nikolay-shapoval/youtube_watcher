@@ -18,6 +18,7 @@ class ChannelController extends Controller
     {
 //        $user_id = Auth::user()->id;
         $user_id = 1;
+
         return Channel::where('user_id', $user_id)->where('is_visible', 1)->get();
     }
 
@@ -29,14 +30,15 @@ class ChannelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Channel $channel
+     * @param  \Illuminate\Http\Request $request
+     * @param  Channel                  $channel
+     *
      * @return Channel
      */
     public function update($id, Request $request)
     {
-        $channel = Channel::find($id);
-        $channel->title       = $request['params']['title'];
+        $channel        = Channel::find($id);
+        $channel->title = $request['params']['title'];
         $channel->save();
 
         return $channel;

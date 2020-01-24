@@ -17,6 +17,9 @@ class Comment extends Model
     ];
 
     protected $fillable = [
-        'type', 'text', 'item_id', 'is_visible'
+        'type',
+        'text',
+        'item_id',
+        'is_visible'
     ];
 }

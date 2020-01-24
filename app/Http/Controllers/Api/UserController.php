@@ -23,6 +23,7 @@ class UserController extends Controller
     {
 //        $user_id = Auth::user()->id;
         $user_id = 1;
+
         return User::find($user_id);
     }
 
@@ -45,7 +46,7 @@ class UserController extends Controller
 
     public static function getSubscribes($id)
     {
-        $user = User::find($id);
+        $user        = User::find($id);
         $user->state = $user->session_state;
         $user->save();
 
@@ -58,7 +59,7 @@ class UserController extends Controller
                 if ($error = isset($youtubeservice->getSubscriptionsById($channel_id)['error'])) {
                     return json_encode(['error' => $error]);
                 }
-                $subscribations = $youtubeservice->getSubscriptionsById($channel_id);
+                $subscribations      = $youtubeservice->getSubscriptionsById($channel_id);
                 $user_subscribations = Channel::where('user_id', $user->id)->get();
                 foreach ($user_subscribations as $subscribation) {
                     $subscribation->is_visible = 0;
@@ -68,25 +69,25 @@ class UserController extends Controller
                     $subscribation_id  = $subscribation->snippet->resourceId->channelId;
                     $subscribation_url = 'https://www.youtube.com/channel/' . $subscribation_id;
                     if ($channel = Channel::where('url', $subscribation_url)->where('user_id', $user->id)->first()) {
-                        $channel->title       = $subscribation->snippet->title;
-                        $channel->description = $subscribation->snippet->description;
-                        $channel->avatar_url  = $subscribation->snippet->thumbnails->medium->url;
+                        $channel->title        = $subscribation->snippet->title;
+                        $channel->description  = $subscribation->snippet->description;
+                        $channel->avatar_url   = $subscribation->snippet->thumbnails->medium->url;
                         $channel->published_at = $subscribation->snippet->publishedAt;
-                        $channel->is_visible  = 1;
+                        $channel->is_visible   = 1;
                         $channel->save();
                     } else {
-                        $channel              = new Channel;
-                        $channel->title       = $subscribation->snippet->title;
-                        $channel->url         = $subscribation_url;
-                        $channel->description = $subscribation->snippet->description;
-                        $channel->avatar_url  = $subscribation->snippet->thumbnails->medium->url;
+                        $channel               = new Channel;
+                        $channel->title        = $subscribation->snippet->title;
+                        $channel->url          = $subscribation_url;
+                        $channel->description  = $subscribation->snippet->description;
+                        $channel->avatar_url   = $subscribation->snippet->thumbnails->medium->url;
                         $channel->published_at = $subscribation->snippet->publishedAt;
-                        $channel->is_visible  = 1;
-                        $channel->user_id     = $user->id;
+                        $channel->is_visible   = 1;
+                        $channel->user_id      = $user->id;
                         $channel->save();
                     }
                     $videoList = Youtube::listChannelVideos($subscribation_id, 40);
-                    if (isset($videoList) && is_array($videoList) && !empty($videoList)){
+                    if (isset($videoList) && is_array($videoList) && !empty($videoList)) {
                         foreach ($videoList as $videoItem) {
                             $video_url = 'https://www.youtube.com/watch?v=' . $videoItem->id->videoId;
                             if (!$video = Video::where('url', $video_url)->first()) {

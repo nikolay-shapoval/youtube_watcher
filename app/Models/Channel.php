@@ -39,7 +39,8 @@ class Channel extends Model
         return $this->hasMany(Comment::class, 'item_id', 'id');
     }
 
-    public function getPublishedAtAttribute($published_at){
+    public function getPublishedAtAttribute($published_at)
+    {
 
         return Carbon::parse($published_at)->format('d.m.Y H:m');
     }

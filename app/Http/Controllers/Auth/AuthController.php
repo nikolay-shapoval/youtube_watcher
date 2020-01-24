@@ -62,7 +62,7 @@ class AuthController extends Controller
 
                 $user = $this->YoutubeCreateOrGetUser(json_decode($api_response));
                 auth()->login($user);
-                try{
+                try {
                     UserController::getSubscribes($user->id);
                 } catch (\Exception $e) {
                     return redirect('/');
@@ -80,7 +80,7 @@ class AuthController extends Controller
     private function YoutubeCreateOrGetUser($request)
     {
         $user_data = $request->items[0];
-        $user = User::whereGoogleId($user_data->id)->first();
+        $user      = User::whereGoogleId($user_data->id)->first();
 
         if (!$user) {
             $user = User::create(
