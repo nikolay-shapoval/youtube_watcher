@@ -1,8 +1,9 @@
-##Installation
+composer install
 
-#####composer install
-#####php artisan migrate
-#####php artisan db:seed
+php artisan migrate
 
-#####npm install
-#####npm run development
+php artisan db:seed
+
+npm install
+
+npm run development
